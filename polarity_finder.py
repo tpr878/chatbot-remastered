@@ -11,6 +11,10 @@ def polarity_finder(w):
 
     myresult = cursorObj.fetchone()
 
-    print(myresult)
+    if myresult == None:
+        return False
+    else:
+        return myresult[1]
+
 
 polarity_finder("भूल")
