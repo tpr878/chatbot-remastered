@@ -45,13 +45,9 @@ for url in url_list:
         temp_list.append(word)
         temp_list.append(polarity)
 
-        # depending upon polarity being +ve, -ve, or neutral, adding each word to its respective dictionary
-        if polarity > 0:
-            cursorObj.execute('''INSERT INTO positive(word, polarity) VALUES (?, ?)''', temp_list)
-        elif polarity < 0:
-            cursorObj.execute('''INSERT INTO negative(word, polarity) VALUES (?, ?)''', temp_list)
-        else:
-            cursorObj.execute('''INSERT INTO neutral(word, polarity) VALUES (?, ?)''', temp_list)
+        
+        cursorObj.execute('''INSERT INTO chatbot(word, polarity) VALUES (?, ?)''', temp_list)
+        
         con.commit()
         
         list.append(temp_list)
