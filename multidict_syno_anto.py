@@ -31,21 +31,24 @@ for i , j  in dict_words.items():
                     for m in l:
                         temp_list1=[] #for sub_lists for synonyms
                         hin_word=eng_to_hin(m)
-                        temp_list1.append(hin_word)
-                        temp_list1.append(j)
-                        cursorObj.execute('''INSERT INTO chatbot(word, polarity) VALUES (?, ?)''', temp_list1)
-                        print("iteration completed for synonyms")
-                        con.commit()      
+                        # devnagiri unicode : \u0900 to \u0963 and \u0972 to \u097f
+                        if '\u0900' <= hin_word <= '\u0963' or '\u0972' <= hin_word <= '\u097f':
+                            temp_list1.append(hin_word)
+                            temp_list1.append(j)
+                            cursorObj.execute('''INSERT INTO chatbot(word, polarity) VALUES (?, ?)''', temp_list1)
+                            print("iteration completed for synonyms")
+                            con.commit()      
                 elif k=="antonyms":
                     for m in l:
                         temp_list2=[]# for sub_lists for antonyms
-                        hin_word=eng_to_hin(syn_ant)
-                        temp_list2.append(hin_word)
-                        temp_list2.append(j*(-1))
-                        cursorObj.execute('''INSERT INTO chatbot(word, polarity) VALUES (?, ?)''', temp_list2)
-                        print("iteration completed for antonyms")
-                        con.commit()           
+                        hin_word=eng_to_hin(m)
+                        # devnagiri unicode : \u0900 to \u0963 and \u0972 to \u097f
+                        if '\u0900' <= hin_word <= '\u0963' or '\u0972' <= hin_word <= '\u097f':
+                            temp_list2.append(hin_word)
+                            temp_list2.append(j*(-1))
+                            cursorObj.execute('''INSERT INTO chatbot(word, polarity) VALUES (?, ?)''', temp_list2)
+                            print("iteration completed for antonyms")
+                            con.commit()           
     else:
         print("Error:", response.status_code, response.text)
        
-    
