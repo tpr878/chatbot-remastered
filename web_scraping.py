@@ -7,8 +7,8 @@ import sqlite3
 # dbms connection
 con = sqlite3.connect('chatbot.db')
 cursorObj = con.cursor()
-# cursorObj.execute("CREATE TABLE positive(word text, polarity real)")
-# print ("Positive Table created successfully")
+cursorObj.execute("CREATE TABLE chatbot(word text, polarity real)")
+print ("Chatbot Table created successfully")
 # cursorObj.execute("CREATE TABLE negative(word text, polarity real)")
 # print ("Negative Table created successfully")
 # cursorObj.execute("CREATE TABLE neutral(word text, polarity real)")
@@ -16,9 +16,9 @@ cursorObj = con.cursor()
 con.commit()
 
 
+# 'https://www.hindikiduniya.com/essay/essay-on-disadvantages-of-internet-in-hindi/'
 # 'https://www.deepawali.co.in/aarakshan-ki-samasya-essay-hindi.html'
-url_list = ['https://www.hindikiduniya.com/essay/essay-on-disadvantages-of-internet-in-hindi/', \
-            'https://hindi.webdunia.com/hindi-essay/essay-on-lockdown-120051900052_1.html']
+url_list = ['https://hindi.webdunia.com/hindi-essay/essay-on-lockdown-120051900052_1.html']
 
 for url in url_list:
     r = requests.get(url)
@@ -54,7 +54,6 @@ for url in url_list:
         print(temp_list)
         
     print('\nURL: ', url, '\nDATA STORED IN DATABASE SUCCESSFULLY\n')
-
 
 
 

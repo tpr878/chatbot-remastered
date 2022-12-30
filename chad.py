@@ -1,6 +1,6 @@
 import intensifiers
 from nltk.sentiment import SentimentIntensityAnalyzer
-from translator import eng_to_hin, hin_to_eng 
+from translator import hin_to_eng 
 from discourse_relation import discourse_relation
 from negation import negation
 from polarity_finder import polarity_finder

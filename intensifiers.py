@@ -20,4 +20,3 @@ def intensifiers(input):
         # print(word_list)
 
     return word_list
-

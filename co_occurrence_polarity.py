@@ -3,9 +3,9 @@ import sqlite3
 con = sqlite3.connect('chatbot.db')
 cursorObj = con.cursor()
 
-def polarity_finder(w):
+def co_occurrence_polarity(w):
 
-    sql = " SELECT * FROM chatbot WHERE word = ?"
+    sql = " SELECT * FROM co_occurrence_words WHERE word = ?"
     word = (w,)
     cursorObj.execute(sql,word)
 
