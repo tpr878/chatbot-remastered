@@ -1,6 +1,6 @@
 import sqlite3
 
-con = sqlite3.connect('chatbot.db')
+con = sqlite3.connect('chatbot.db', check_same_thread= False)
 cursorObj = con.cursor()
 
 def co_occurrence_polarity(w):
