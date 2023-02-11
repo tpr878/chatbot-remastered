@@ -1,4 +1,4 @@
-def total_polarity(words):
+def total_polarity(string):
     import intensifiers
     from nltk.sentiment import SentimentIntensityAnalyzer
     from translator import hin_to_eng 
@@ -6,14 +6,21 @@ def total_polarity(words):
     from negation import negation
     from polarity_finder import polarity_finder
     from co_occurrence_polarity import co_occurrence_polarity
+    from stopword_removal import stopword_removal
+    from emotion_finder import emotion_finder
 
-    
+
+    first_list = string.split()
     # words = "मैं बहुत बदसूरत लड़का हूँ"
     # words = "मैं बदसूरत लड़का पहुंच गई हूँ"
     polarity_after_intensifiers = 0.0
     total_polarity = 0.0
     co_oc_polarity = 0.0
+    chad_list = []
 
+
+    ################################## STOP WORD REMOVAL ########################################
+    words = stopword_removal(string)
 
     ################################## DISCOURSE RELATION ########################################
 
@@ -54,6 +61,7 @@ def total_polarity(words):
         for i in final_list:
             total_polarity = total_polarity + i[1]
 
+        emotion = emotion_finder(post_negation_list)
     else:
         after_intensifiers = intensifiers.intensifiers(discourse_str)
 
@@ -63,11 +71,13 @@ def total_polarity(words):
                 if polarity_finder(j) == None:
                     sia = SentimentIntensityAnalyzer()
                     eng_word = hin_to_eng(j)
-                    polarity_after_intensifiers = polarity_after_intensifiers + (sia.polarity_scores(eng_word).get('compound')*2)
-                    after_intensifiers.remove(i)
+                    polarity_after_intensifiers = polarity_after_intensifiers + (sia.polarity_scores(eng_word).get('compound')*1.5)
+                    # after_intensifiers.remove(i)
+                    after_intensifiers = list(map(lambda x: x.replace(i, 'N/A'), after_intensifiers))
                 else:
-                    polarity_after_intensifiers = polarity_after_intensifiers + (polarity_finder(j)*2)
-                    after_intensifiers.remove(i) 
+                    polarity_after_intensifiers = polarity_after_intensifiers + (polarity_finder(j)*1.5)
+                    # after_intensifiers.remove(i) 
+                    after_intensifiers = list(map(lambda x: x.replace(i, 'N/A'), after_intensifiers))
         
         for i in after_intensifiers:
             temp_co_oc_list = []
@@ -96,12 +106,20 @@ def total_polarity(words):
             if polarity_finder(i) == None:
                     sia = SentimentIntensityAnalyzer()
                     eng_word = hin_to_eng(i)
-                    total_polarity = total_polarity + (sia.polarity_scores(eng_word).get('compound'))
+                    total_polarity = total_polarity + (sia.polarity_scores(eng_word).get('compound')) + polarity_after_intensifiers
             else:
                 total_polarity = total_polarity + (polarity_finder(i)) + co_oc_polarity + polarity_after_intensifiers          
 
-    return total_polarity
+        emotion = emotion_finder(discourse_list)
+    
+    total_polarity = round((total_polarity/len(first_list)), 3)
+    chad_list.append(emotion)
+    chad_list.append(total_polarity)
 
+    return chad_list
+
+# test = 'object is not subscriptable'
+# print(total_polarity(test))
 
 
 

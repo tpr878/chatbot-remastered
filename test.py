@@ -1,4 +1,5 @@
-a = 0
-b = -0.0
+import statistics
 
-print(a==b)
+list1 = ['a', 'a', 'a', 'b', 'd']
+mode = statistics.mode(list1)
+print(mode)
